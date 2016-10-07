@@ -1,5 +1,6 @@
 package br.senac.rn.model;
 
+import br.senac.rn.dao.PersistDB;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Venda {
+public class Venda implements PersistDB{
     
     @Id
     @GeneratedValue

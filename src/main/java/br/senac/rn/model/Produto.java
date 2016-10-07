@@ -1,12 +1,13 @@
 package br.senac.rn.model;
 
+import br.senac.rn.dao.PersistDB;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Produto {
+public class Produto implements PersistDB{
 
     @Id
     @GeneratedValue

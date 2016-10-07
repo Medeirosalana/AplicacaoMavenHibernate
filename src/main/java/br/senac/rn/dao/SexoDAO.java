@@ -6,20 +6,27 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 public class SexoDAO extends AbstractGenericDAO<Sexo>{
     
     
+    public Class<Sexo> getClassType(){
+        return Sexo.class;
+    }
     
-    public List<Sexo> buscarTudo(){
-        return this.getEerenciadorEntidade().createQuery("SELECT s FROM Sexo s").getResultList();
+    public List<Sexo> buscarPorFiltro(String filtro){
+        try{
+            gerenciadorEntidade = getGerenciadorEntidade();
+            Query query = gerenciadorEntidade.createQuery("SELECT s FROM Sexo s WHERE s.nome LIKE :filtro");
+            query.setParameter("filtro", "%"+ filtro +"%");
+            return query.getResultList();
+        }catch(Exception erro){
+            System.out.println("ERRO AO BUSCAR LISTA: " + erro.toString());
+        }
+        return null;
     }
-    public Sexo buscarPorId(int id){
-        return this.getEerenciadorEntidade().find(Sexo.class, id);
-    }
-    public List<Sexo> buscarPorFiltro(String filter){
-        Query query = this.getEerenciadorEntidade().createQuery("SELECT s FROM Sexo s WHERE s.nome LIKE :filtro");
-        query.setParameter("filtro", "%"+ filter +"%");
-        return query.getResultList();
-    }
+    
 }

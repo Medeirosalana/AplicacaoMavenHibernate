@@ -6,24 +6,26 @@
 package br.senac.rn.dao;
 
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
-public abstract class AbstractGenericDAO<Objeto> {
+public abstract class AbstractGenericDAO<Objeto extends PersistDB> {
 
-    private EntityManager gerenciadorEntidade;
+    protected EntityManager gerenciadorEntidade;
     
-    public EntityManager getEerenciadorEntidade() {
-        if (gerenciadorEntidade == null){
-            gerenciadorEntidade = Persistence.createEntityManagerFactory("ConexaoDB").createEntityManager();
-        }
-        return gerenciadorEntidade;
+    protected EntityManager getGerenciadorEntidade() {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("ConexaoDB");
+        return emf.createEntityManager();
     }
 
     public boolean inserir(Objeto objeto){
         try{
-            gerenciadorEntidade = getEerenciadorEntidade();
+            gerenciadorEntidade = getGerenciadorEntidade();
             gerenciadorEntidade.getTransaction().begin();
             gerenciadorEntidade.persist(objeto);
             gerenciadorEntidade.getTransaction().commit();
@@ -38,7 +40,7 @@ public abstract class AbstractGenericDAO<Objeto> {
     
         public boolean apagar(Objeto objeto){
         try{
-            gerenciadorEntidade = getEerenciadorEntidade();
+            gerenciadorEntidade = getGerenciadorEntidade();
             gerenciadorEntidade.getTransaction().begin();
             gerenciadorEntidade.remove(objeto);
             gerenciadorEntidade.getTransaction().commit();
@@ -52,10 +54,10 @@ public abstract class AbstractGenericDAO<Objeto> {
     
     public boolean editar(Objeto objeto){
         try{
-            gerenciadorEntidade = getEerenciadorEntidade();
-            this.gerenciadorEntidade.getTransaction().begin();
-            this.gerenciadorEntidade.merge(objeto);
-            this.gerenciadorEntidade.getTransaction().commit();
+            gerenciadorEntidade = getGerenciadorEntidade();
+            gerenciadorEntidade.getTransaction().begin();
+            gerenciadorEntidade.merge(objeto);
+            gerenciadorEntidade.getTransaction().commit();
             return true;
         }catch(Exception erro){
             System.out.println("ERRO AO EDITAR: " + erro.toString());
@@ -64,6 +66,30 @@ public abstract class AbstractGenericDAO<Objeto> {
         return false;
     }
     
+    public List<Objeto> buscarTudo(){
+        try{
+            gerenciadorEntidade = getGerenciadorEntidade();
+            CriteriaBuilder builder = gerenciadorEntidade.getCriteriaBuilder();
+            CriteriaQuery<Objeto> query = builder.createQuery(getClassType());
+            TypedQuery<Objeto> typeQuery = gerenciadorEntidade.createQuery(query.select(query.from(getClassType())));
+            return typeQuery.getResultList();
+        }catch(Exception erro){
+            System.out.println("ERRO AO BUSCAR LISTA: " + erro.toString());
+        }
+        return null;
+    }
+    
+    public Objeto buscarPorId (int id){
+        try{
+           gerenciadorEntidade = getGerenciadorEntidade();
+           return gerenciadorEntidade.find(getClassType(), id);           
+        }catch(Exception erro){
+            System.out.println("ERRO AO BUSCAR POR ID: " + erro.toString());
+        }
+        return null;
+    }
+    
+    public abstract Class<Objeto> getClassType();
     
     
 }
