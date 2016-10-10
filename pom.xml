@@ -15,16 +15,11 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>unknown.binary</groupId>
-            <artifactId>hibernate-jpamodelgen-4.3.1.Final</artifactId>
-            <version>SNAPSHOT</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
-            <version>6.0</version>
+            <version>7.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -43,19 +38,19 @@
             <version>4.3.1.Final</version>
         </dependency>
         
-<!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api -->
-<dependency>
-    <groupId>com.sun.faces</groupId>
-    <artifactId>jsf-api</artifactId>
-    <version>2.2.13</version>
-</dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-api -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>2.2.13</version>
+        </dependency>
 
-<!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-impl -->
-<dependency>
-    <groupId>com.sun.faces</groupId>
-    <artifactId>jsf-impl</artifactId>
-    <version>2.2.13</version>
-</dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.faces/jsf-impl -->
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>2.2.13</version>
+        </dependency>
 
         
     </dependencies>
@@ -67,8 +62,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                     <compilerArguments>
                         <endorseddirs>${endorsed.dir}</endorseddirs>
                     </compilerArguments>
@@ -99,7 +94,7 @@
                                 <artifactItem>
                                     <groupId>javax</groupId>
                                     <artifactId>javaee-endorsed-api</artifactId>
-                                    <version>6.0</version>
+                                    <version>7.0</version>
                                     <type>jar</type>
                                 </artifactItem>
                             </artifactItems>

@@ -26,13 +26,13 @@ public class SexoMBean {
         return "index.xhtml";
     }
 
-    public List<Sexo> getSexos() {
+    public List<Sexo> getListaCompleta() {
         SexoDAO dao = new SexoDAO();
         sexos = dao.buscarTudo();
         return sexos;
     }
 
-    public void setSexos(List<Sexo> sexos) {
-        this.sexos = sexos;
-    }
+//    public void setSexos(List<Sexo> sexos) {
+//        this.sexos = sexos;
+//    }
 }
